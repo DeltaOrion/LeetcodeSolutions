@@ -1,4 +1,4 @@
-package me.jacob.assign.algorithms;
+package me.jacob.assign.algorithms.datastructures;
 
 import java.util.Stack;
 
@@ -6,8 +6,8 @@ public class Problem946 {
 
     public static void main(String[] args) {
         Problem946 p = new Problem946();
-        int[] pushed = new int[]{2,1,0};
-        int[] popped = new int[]{1,2,0};
+        int[] pushed = new int[]{1,2,0};
+        int[] popped = new int[]{2,1,0};
 
         System.out.println(p.validateStackSequences(pushed,popped));
     }
@@ -27,10 +27,12 @@ public class Problem946 {
      * @return whether it is possible to to perform all of the pushes and pops.
      */
     public boolean validateStackSequences(int[] pushed, int[] popped) {
-        return validateStackON(pushed,popped);
+        return validateStackO1(pushed,popped);
     }
 
     public boolean validateStackON(int[] pushed, int[] popped) {
+        //in this approach we attempt to add to the stack
+        //we drain the stack whenever possible
         int j = 0;
 
         Stack<Integer> stack = new Stack<>();
@@ -48,5 +50,23 @@ public class Problem946 {
         }
 
         return stack.isEmpty();
+    }
+
+    public boolean validateStackO1(int[] pushed, int[] popped) {
+        //in this approach we pretend that the pushed array
+        //is a stack and perform the operation
+        int j = 0;
+        int stackPointer = -1;
+
+        for(int val : pushed) {
+            stackPointer++;
+            pushed[stackPointer] = val;
+            while (stackPointer >= 0 && popped[j] == pushed[stackPointer]) {
+                stackPointer--;
+                j++;
+            }
+        }
+
+        return stackPointer == -1;
     }
 }
