@@ -31,28 +31,22 @@ public class Problem946 {
     }
 
     public boolean validateStackON(int[] pushed, int[] popped) {
-        int i = 0;
         int j = 0;
 
         Stack<Integer> stack = new Stack<>();
 
-        while (i < pushed.length || j < popped.length) {
-            if(!stack.isEmpty() && stack.peek() == popped[j]) {
+        //always insert into the stack
+        for(int val : pushed) {
+            stack.push(val);
+
+            //if the stack is not empty
+            //attempt to drain the stack
+            while(!stack.isEmpty() && popped[j] == stack.peek()) {
                 stack.pop();
                 j++;
-            } else if(i==pushed.length) {
-                return false;
-            } else {
-                if(pushed[i]!=popped[j]) {
-                    stack.push(pushed[i]);
-                } else {
-                    j++;
-                }
-
-                i++;
             }
         }
 
-        return true;
+        return stack.isEmpty();
     }
 }
