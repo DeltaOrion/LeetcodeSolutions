@@ -1,4 +1,4 @@
-package me.jacob.assign.algorithms.array;
+package me.jacob.assign.algorithms.dp;
 
 import java.util.Arrays;
 
