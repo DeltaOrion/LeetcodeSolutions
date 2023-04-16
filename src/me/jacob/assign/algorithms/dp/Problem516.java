@@ -10,6 +10,11 @@ public class Problem516 {
     }
 
     public int longestPalindromeSubseq(String s) {
+        return longestPalindromeSubseqDP(s);
+        //return longestPalindromeSubseqBacktrack(s,0,s.length()-1);
+    }
+
+    public int longestPalindromeSubseqDP(String s) {
         //DP is a table which shows the largest palindrome between a start and
         //end index where the y axis represents the starting index
         //and the x axis represents the ending index.
@@ -42,7 +47,25 @@ public class Problem516 {
             }
         }
 
-        System.out.println(Arrays.deepToString(DP));
         return DP[0][s.length()-1];
+    }
+
+    public int longestPalindromeSubseqBacktrack(String s, int start, int end) {
+        //use a recursive top down approach
+        if(start == end)
+            return 1;
+
+        if(start > end) {
+            return 0;
+        }
+
+        if(s.charAt(start) == s.charAt(end)) {
+            return 2 + longestPalindromeSubseqBacktrack(s,start + 1, end - 1);
+        } else {
+            return Math.max(
+                    longestPalindromeSubseqBacktrack(s,start + 1,end),
+                    longestPalindromeSubseqBacktrack(s, start,end - 1)
+            );
+        }
     }
 }
